@@ -1,0 +1,27 @@
+#!/bin/bash
+# This isn't really that safe to blindly run,
+# as it uses sudo to change system file permissions.
+# Hopefully it shouldn't break anything though.
+# Usage: ds4led [r value] [g value] [b value]
+# Values from 0 to 255
+# Source: https://gist.github.com/jacobmischka/7f96f3fddf93dbe21db2
+
+DS4="000?:054C:05C4.*"
+
+cd /sys/class/leds
+FILES=("$DS4:*/brightness")
+for FILE in $FILES; do
+	if [[ $(stat -c "%a" $FILE) != 777 ]]; then
+		sudo chmod 777 $FILE
+	fi
+done
+
+if [[ $# > 0 ]]; then
+    echo $1 > $DS4:red/brightness
+fi
+if [[ $# > 1 ]]; then
+	echo $2 > $DS4:green/brightness
+fi
+if [[ $# > 2 ]]; then
+	echo $3 > $DS4:blue/brightness
+fi
