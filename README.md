@@ -9,7 +9,7 @@ In the future i want to do everything within rust, it just needs to edit files
 git clone https://github.com/Steccah/ds4led-iced.git
 cd ds4led-iced
 sudo mv src/ds4led /usr/bin
-cargo run
+cargo run --release
 ```
 You'll find the executable in target
 
